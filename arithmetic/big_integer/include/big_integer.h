@@ -4,13 +4,13 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <stdint.h>
 
-#include <allocator.h>
-#include <allocator_guardant.h>
+// #include <allocator.h>
+// #include <allocator_guardant.h>
 #include <not_implemented.h>
 
-class big_integer final:
-    allocator_guardant
+class big_integer
 {
 
 public:
@@ -26,7 +26,6 @@ private:
     
     class multiplication
     {
-    
     public:
         
         virtual ~multiplication() noexcept = default;
@@ -44,7 +43,6 @@ private:
     {
     
     public:
-        
         big_integer &multiply(
             big_integer &first_multiplier,
             big_integer const &second_multiplier) const override;
@@ -88,9 +86,9 @@ private:
     
     class division
     {
-    
+
     public:
-        
+
         virtual ~division() noexcept = default;
     
     public:
@@ -163,29 +161,31 @@ private:
 
 private:
 
-    int _oldest_digit;
-    unsigned int *_other_digits;
-    allocator *_allocator;
+    // int _oldest_digit;
+    // unsigned int *_other_digits;
+    // allocator *_allocator;
 
+    bool _sign = false;
+    std::vector<uint32_t> _digits;
+    
 public:
+    big_integer() = default;
 
-    big_integer(
-        int const *digits,
-        size_t digits_count,
-        allocator *allocator = nullptr);
+    explicit big_integer(int value);
 
     explicit big_integer(
-        std::vector<int> const &digits,
-        allocator *allocator = nullptr);
+        bool sign,
+        std::vector<uint32_t> const &digits);
 
     explicit big_integer(
         std::string const &value_as_string,
-        size_t base = 10,
-        allocator *allocator = nullptr);
+        size_t base = 10);
 
 public:
 
-    ~big_integer() noexcept;
+    static big_integer const zero;
+
+    ~big_integer() noexcept = default;
     
     big_integer(
         big_integer const &other);
@@ -198,6 +198,25 @@ public:
     
     big_integer &operator=(
         big_integer &&other) noexcept;
+
+    void set_sign(bool);
+    bool get_sign() const;
+
+    bool is_even() const; // четный
+    bool is_odd() const; // нечетный
+
+private:
+    static uint32_t halves_add(uint32_t &, uint32_t, uint32_t);
+
+    static uint32_t halves_subtr(uint32_t &res, uint32_t a, uint32_t b);
+
+public:
+
+    big_integer const & move_left();
+    static big_integer const & move_left(big_integer);
+
+    big_integer const & move_right();
+    static big_integer const & move_right(big_integer);
 
 public:
 
@@ -223,6 +242,17 @@ public:
 
 public:
 
+    static void simple_add(big_integer &, big_integer const &);
+
+    static void simple_subtr(big_integer &, big_integer const &);
+
+    static void simple_multiply(big_integer &, big_integer const &);
+
+    static big_integer simple_division(big_integer const &, big_integer const &, big_integer &);
+    static big_integer simple_division(big_integer const &, big_integer const &);
+
+public:
+
     big_integer operator-() const;
     
     big_integer &operator+=(
@@ -231,8 +261,8 @@ public:
     big_integer operator+(
         big_integer const &other) const;
 
-    big_integer operator+(
-        std::pair<big_integer, allocator *> const &other) const;
+    // big_integer operator+(
+    //     std::pair<big_integer, allocator *> const &other) const;
     
     big_integer &operator-=(
         big_integer const &other);
@@ -240,35 +270,23 @@ public:
     big_integer operator-(
         big_integer const &other) const;
 
-    big_integer operator-(
-        std::pair<big_integer, allocator *> const &other) const;
-    
     big_integer &operator*=(
         big_integer const &other);
 
     big_integer operator*(
         big_integer const &other) const;
 
-    big_integer operator*(
-        std::pair<big_integer, allocator *> const &other) const;
-    
     big_integer &operator/=(
         big_integer const &other);
 
     big_integer operator/(
         big_integer const &other) const;
 
-    big_integer operator/(
-        std::pair<big_integer, allocator *> const &other) const;
-
     big_integer &operator%=(
         big_integer const &other);
 
     big_integer operator%(
         big_integer const &other) const;
-
-    big_integer operator%(
-        std::pair<big_integer, allocator *> const &other) const;
 
 public:
 
@@ -280,17 +298,11 @@ public:
     big_integer operator&(
         big_integer const &other) const;
 
-    big_integer operator&(
-        std::pair<big_integer, allocator *> const &other) const;
-
     big_integer &operator|=(
         big_integer const &other);
 
     big_integer operator|(
         big_integer const &other) const;
-
-    big_integer operator|(
-        std::pair<big_integer, allocator *> const &other) const;
 
     big_integer &operator^=(
         big_integer const &other);
@@ -298,17 +310,11 @@ public:
     big_integer operator^(
         big_integer const &other) const;
 
-    big_integer operator^(
-        std::pair<big_integer, allocator *> const &other) const;
-
     big_integer &operator<<=(
         size_t shift);
 
     big_integer operator<<(
         size_t shift) const;
-
-    big_integer operator<<(
-        std::pair<size_t, allocator *> const &shift) const;
 
     big_integer &operator>>=(
         size_t shift);
@@ -316,50 +322,47 @@ public:
     big_integer operator>>(
         size_t shift) const;
 
-    big_integer operator>>(
-        std::pair<size_t, allocator *> const &shift) const;
-
 public:
 
-    static big_integer &multiply(
-        big_integer &first_multiplier,
-        big_integer const &second_multiplier,
-        allocator *allocator = nullptr,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
-
-    static big_integer multiply(
-        big_integer const &first_multiplier,
-        big_integer const &second_multiplier,
-        allocator *allocator = nullptr,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
-
-    static big_integer &divide(
-        big_integer &dividend,
-        big_integer const &divisor,
-        allocator *allocator = nullptr,
-        big_integer::division_rule division_rule = big_integer::division_rule::trivial,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
-
-    static big_integer divide(
-        big_integer const &dividend,
-        big_integer const &divisor,
-        allocator *allocator = nullptr,
-        big_integer::division_rule division_rule = big_integer::division_rule::trivial,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
-
-    static big_integer &modulo(
-        big_integer &dividend,
-        big_integer const &divisor,
-        allocator *allocator = nullptr,
-        big_integer::division_rule division_rule = big_integer::division_rule::trivial,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
-
-    static big_integer modulo(
-        big_integer const &dividend,
-        big_integer const &divisor,
-        allocator *allocator = nullptr,
-        big_integer::division_rule division_rule = big_integer::division_rule::trivial,
-        big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    // static big_integer &multiply(
+    //     big_integer &first_multiplier,
+    //     big_integer const &second_multiplier,
+    //     allocator *allocator = nullptr,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    //
+    // static big_integer multiply(
+    //     big_integer const &first_multiplier,
+    //     big_integer const &second_multiplier,
+    //     allocator *allocator = nullptr,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    //
+    // static big_integer &divide(
+    //     big_integer &dividend,
+    //     big_integer const &divisor,
+    //     allocator *allocator = nullptr,
+    //     big_integer::division_rule division_rule = big_integer::division_rule::trivial,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    //
+    // static big_integer divide(
+    //     big_integer const &dividend,
+    //     big_integer const &divisor,
+    //     allocator *allocator = nullptr,
+    //     big_integer::division_rule division_rule = big_integer::division_rule::trivial,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    //
+    // static big_integer &modulo(
+    //     big_integer &dividend,
+    //     big_integer const &divisor,
+    //     allocator *allocator = nullptr,
+    //     big_integer::division_rule division_rule = big_integer::division_rule::trivial,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
+    //
+    // static big_integer modulo(
+    //     big_integer const &dividend,
+    //     big_integer const &divisor,
+    //     allocator *allocator = nullptr,
+    //     big_integer::division_rule division_rule = big_integer::division_rule::trivial,
+    //     big_integer::multiplication_rule multiplication_rule = big_integer::multiplication_rule::trivial);
 
 public:
     
@@ -370,11 +373,6 @@ public:
     friend std::istream &operator>>(
         std::istream &stream,
         big_integer &value);
-
-private:
-
-    [[nodiscard]] allocator *get_allocator() const noexcept override;
-    
 };
 
 #endif //MATH_PRACTICE_AND_OPERATING_SYSTEMS_BIGINT_H

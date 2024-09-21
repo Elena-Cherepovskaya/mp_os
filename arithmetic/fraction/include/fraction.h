@@ -5,7 +5,6 @@
 
 class fraction final
 {
-
 private:
 
     big_integer _numerator;
@@ -13,19 +12,24 @@ private:
 
 public:
 
+    fraction() = default;
+
+    fraction(
+        big_integer const &,
+        big_integer const &);
+
     fraction(
         big_integer &&numerator,
         big_integer &&denominator);
 
 public:
-
-    ~fraction() noexcept;
+    ~fraction() noexcept = default;
 
     fraction(
-        fraction const &other);
+        fraction const &) = default;
 
-    fraction &operator=(
-        fraction const &other);
+    fraction & operator=(
+        fraction const &) = default;
 
     fraction(
         fraction &&other) noexcept;
@@ -58,6 +62,18 @@ public:
 
     fraction operator/(
         fraction const &other) const;
+
+    static void simple_add(fraction &, fraction const &);
+
+    static void simple_subtr(fraction &, fraction const &);
+
+    static void simple_multiply(fraction &, fraction const &);
+
+    static void simple_division(fraction &, fraction const &);
+
+    static void reduce(fraction &);
+
+    static void make_common_denominator(fraction &, fraction &);
 
 public:
 
@@ -129,10 +145,15 @@ public:
     fraction arccosec(
         fraction const &epsilon) const;
 
+    static big_integer gcd(big_integer const &, big_integer const &);
+
+    static big_integer lcm(big_integer const &, big_integer const &);
+
 public:
 
     fraction pow(
         size_t degree) const;
+
 
 public:
 
@@ -149,6 +170,9 @@ public:
         fraction const &epsilon) const;
 
     fraction lg(
+        fraction const &epsilon) const;
+
+    fraction exp(
         fraction const &epsilon) const;
 
 };

@@ -4,6 +4,8 @@
 #include <client_logger.h>
 #include <operation_not_supported.h>
 
+#include "../../../fraction/include/fraction.h"
+
 logger *create_logger(
     std::vector<std::pair<std::string, logger::severity>> const &output_file_streams_setup,
     bool use_console_stream = true,
@@ -37,15 +39,16 @@ TEST(positive_tests, test1)
                 logger::severity::information
             },
         });
-    
+
     big_integer bigint_1("32850346459076457453464575686784654");
     big_integer bigint_2("423534596495087569087908753095322");
+
     big_integer result_of_sum = bigint_1 + bigint_2;
-    
+
     std::stringstream ss;
     ss << result_of_sum;
     std::string result_string = ss.str();
-    
+
     EXPECT_TRUE(result_string == "33273881055571545022552484439879976");
     
     delete logger;
@@ -65,7 +68,7 @@ TEST(positive_tests, test2)
     big_integer bigint_2("0000042353459649508756908790875309532245366457546765745645647567575");
     
     big_integer result_of_sub = bigint_1 - bigint_2;
-    
+
     std::stringstream ss;
     ss << result_of_sub;
     std::string result_string = ss.str();

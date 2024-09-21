@@ -13,15 +13,8 @@ target_include_directories(
 target_link_libraries(
         mp_os_arthmtc_frctn
         PUBLIC
-        mp_os_cmmn)
-target_link_libraries(
-        mp_os_arthmtc_frctn
-        PUBLIC
-        mp_os_allctr_allctr)
-target_link_libraries(
-        mp_os_arthmtc_frctn
-        PUBLIC
         mp_os_arthmtc_bg_intgr)
+
 set_target_properties(
         mp_os_arthmtc_frctn PROPERTIES
         LANGUAGES CXX
