@@ -5,7 +5,8 @@ add_subdirectory(hash_table)
 add_subdirectory(search_tree)
 add_library(
         mp_os_assctv_cntnr
-        include/associative_container.h)
+        include/associative_container.h
+        empty.cpp)
 target_include_directories(
         mp_os_assctv_cntnr
         PUBLIC

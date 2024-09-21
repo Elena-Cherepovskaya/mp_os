@@ -4,7 +4,8 @@ project(mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_scpgt_tr)
 add_subdirectory(tests)
 add_library(
         mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_scpgt_tr
-        include/scapegoat_tree.h)
+        include/scapegoat_tree.h
+        empty.cpp)
 target_include_directories(
         mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_scpgt_tr
         PUBLIC

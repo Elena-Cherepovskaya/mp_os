@@ -132,7 +132,8 @@ AVL_tree<tkey, tvalue>::insertion_template_method::insertion_template_method(
     typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy insertion_strategy):
     binary_search_tree<tkey, tvalue>::insertion_template_method(tree, insertion_strategy)
 {
-    throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::insertion_template_method::insertion_template_method(AVL_tree<tkey, tvalue> *, typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy)", "your code should be here...");
+    int a =0;
+//    throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::insertion_template_method::insertion_template_method(AVL_tree<tkey, tvalue> *, typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy)", "your code should be here...");
 }
 
 template<
@@ -163,7 +164,7 @@ AVL_tree<tkey, tvalue>::AVL_tree(
     typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy insertion_strategy,
     typename binary_search_tree<tkey, tvalue>::disposal_of_nonexistent_key_attempt_strategy disposal_strategy)
 {
-    throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::AVL_tree(allocator *, logger *, typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy, typename binary_search_tree<tkey, tvalue>::disposal_of_nonexistent_key_attempt_strategy)", "your code should be here...");
+    // throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::AVL_tree(allocator *, logger *, typename binary_search_tree<tkey, tvalue>::insertion_of_existent_key_attempt_strategy, typename binary_search_tree<tkey, tvalue>::disposal_of_nonexistent_key_attempt_strategy)", "your code should be here...");
 }
 
 template<
@@ -171,7 +172,7 @@ template<
     typename tvalue>
 AVL_tree<tkey, tvalue>::~AVL_tree() noexcept
 {
-    throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::~AVL_tree() noexcept", "your code should be here...");
+    // throw not_implemented("template<typename tkey, typename tvalue> AVL_tree<tkey, tvalue>::~AVL_tree() noexcept", "your code should be here...");
 }
 
 template<

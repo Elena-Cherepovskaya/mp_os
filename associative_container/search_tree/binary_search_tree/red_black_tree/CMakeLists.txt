@@ -4,7 +4,8 @@ project(mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_rb_tr)
 add_subdirectory(tests)
 add_library(
         mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_rb_tr
-        include/red_black_tree.h)
+        include/red_black_tree.h
+        empty.cpp)
 target_include_directories(
         mp_os_assctv_cntnr_srch_tr_bnr_srch_tr_rb_tr
         PUBLIC

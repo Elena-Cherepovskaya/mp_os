@@ -84,6 +84,7 @@ bool compare_results(
     return true;
 }
 
+
 template<
     typename tkey,
     typename tvalue>
@@ -130,6 +131,7 @@ bool prefix_iterator_test(
     return true;
 }
 
+
 template<
     typename tkey,
     typename tvalue>
@@ -153,6 +155,7 @@ bool postfix_iterator_test(
     
     return true;
 }
+
 
 TEST(binarySearchTreePositiveTests, test1)
 {
@@ -210,7 +213,7 @@ TEST(binarySearchTreePositiveTests, test2)
     bst->insert(15, 1);
     bst->insert(3, 67);
     bst->insert(4, 45);
-    
+
     std::vector<typename binary_search_tree<int, int>::iterator_data> expected_result =
         {
             binary_search_tree<int, int>::iterator_data(0, 1, 5),
@@ -227,6 +230,7 @@ TEST(binarySearchTreePositiveTests, test2)
     delete bst;
     delete logger;
 }
+
 
 TEST(binarySearchTreePositiveTests, test3)
 {
@@ -263,6 +267,7 @@ TEST(binarySearchTreePositiveTests, test3)
     delete bst;
     delete logger;
 }
+
 
 TEST(binarySearchTreePositiveTests, test4)
 {
@@ -598,6 +603,7 @@ TEST(binarySearchTreePositiveTests, test11)
     delete bst1;
     delete logger;
 }
+
 
 int main(
     int argc,
